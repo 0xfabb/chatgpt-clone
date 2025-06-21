@@ -45,28 +45,11 @@ const UpArrowIcon = () => (
         <path d="M12 19V5M12 5L5 12M12 5L19 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
 );
-const GptMessageIcon = () => (
-  <div className="w-8 h-8 bg-[#19C37D] rounded-full flex items-center justify-center flex-shrink-0">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M19.467 4.5H4.533C3.686 4.5 3 5.186 3 6.033V15.467C3 16.314 3.686 17 4.533 17H7.5V21L12.428 17H19.467C20.314 17 21 16.314 21 15.467V6.033C21 5.186 20.314 4.5 19.467 4.5Z" fill="white"/>
-    </svg>
-  </div>
-);
+
 const EditIcon = () => (
     <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"/><path fillRule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clipRule="evenodd"/></svg>
 );
-const ClipboardIcon = () => (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-);
-const ThumbsUpIcon = () => (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 10v12"/><path d="M17 10V4a2 2 0 0 0-2-2 2 2 0 0 0-2 2v6h3a2 2 0 0 1 2 2Z"/></svg>
-);
-const ThumbsDownIcon = () => (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 14V2"/><path d="M7 14V8a2 2 0 0 0-2-2 2 2 0 0 0-2 2v6h3a2 2 0 0 1 2 2Z"/></svg>
-);
-const RefreshIcon = () => (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
-);
+
 
 function Sidebar() {
   return (
