@@ -28,9 +28,6 @@ const GPTsIcon = () => (
 const PlusIcon = () => (
   <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><path d="M12 5v14m-7-7h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>
 );
-const ToolsIcon = () => (
-  <svg width="20" height="20" fill="none" viewBox="0 0 20 20"><path d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-1-4.828l-2.121-2.122m3.121-1.05h.01m-3.131 5.303L9 13.172m4.243-4.243L11.12 11.05m-1.05-3.121h.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-);
 const MicIcon = () => (
   <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M19 10v1a7 7 0 0 1-14 0v-1m7 11v-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
 );
@@ -50,6 +47,12 @@ const EditIcon = () => (
     <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"/><path fillRule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clipRule="evenodd"/></svg>
 );
 
+const MenuIcon = () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+);
+const NewChatMobileIcon = () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h3"></path><path d="m21.5 7.5-3.5 3.5L16 9"></path></svg>
+);
 
 function Sidebar() {
   return (
@@ -89,16 +92,33 @@ function Sidebar() {
   );
 }
 
-function ChatHeader() {
+function ChatHeader({ onMenuClick }: { onMenuClick: () => void }) {
   return (
-    <header className="h-16 flex items-center justify-between px-6 border-b border-black/10  text-white shadow-sm">
-      <div className="flex items-center gap-2">
-        <span className="font-semibold text-lg">ChatGPT</span>
-        <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" stroke="#fff" strokeWidth="2" strokeLinecap="round"/></svg>
+    <header className="h-16 flex items-center justify-between px-4 md:px-6 border-b border-black/10 text-white shadow-sm bg-opacity-50 backdrop-blur-md sticky top-0 z-10">
+      {/* Mobile view */}
+      <div className="flex items-center justify-between w-full md:hidden">
+        <button onClick={onMenuClick} className="p-1 text-gray-300 hover:text-white">
+            <MenuIcon />
+        </button>
+        <div className="flex items-center gap-1">
+            <span className="font-semibold text-lg">ChatGPT</span>
+            <svg width="16" height="16" fill="none" viewBox="0 0 16 16" className="text-gray-400"><path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+        </div>
+        <button className="p-1 text-gray-300 hover:text-white">
+            <NewChatMobileIcon />
+        </button>
       </div>
-      <div className="flex items-center gap-4">
-        <button className="p-2 hover:bg-[#2d2d2d] rounded-full transition-colors"><SettingsIcon /></button>
-        <UserAvatar />
+
+      {/* Desktop view */}
+      <div className="hidden md:flex items-center justify-between w-full">
+        <div className="flex items-center gap-2">
+            <span className="font-semibold text-lg">ChatGPT</span>
+            <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" stroke="#fff" strokeWidth="2" strokeLinecap="round"/></svg>
+        </div>
+        <div className="flex items-center gap-4">
+            <button className="p-2 hover:bg-[#2d2d2d] rounded-full transition-colors"><SettingsIcon /></button>
+            <UserAvatar />
+        </div>
       </div>
     </header>
   );
@@ -270,6 +290,7 @@ export default function Home() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -361,14 +382,31 @@ export default function Home() {
   }, [messages]);
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-[#212121]">
-      <Sidebar />
+    <div className="relative flex h-screen w-screen overflow-hidden bg-[#212121]">
+      {/* Mobile Sidebar: absolute positioning and transition */}
+      <div className={`absolute top-0 left-0 h-full z-30 transform transition-transform duration-300 ease-in-out md:hidden ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+          <Sidebar />
+      </div>
+      
+      {/* Overlay for mobile */}
+      {isSidebarOpen && (
+          <div
+              className="absolute inset-0 bg-black/60 z-20 md:hidden"
+              onClick={() => setIsSidebarOpen(false)}
+          ></div>
+      )}
+
+      {/* Desktop Sidebar: static */}
+      <div className="hidden md:flex flex-shrink-0">
+          <Sidebar />
+      </div>
+
       <div className="flex flex-col flex-1 h-full bg-[#212121]">
-        <ChatHeader />
-        <main className="flex-1 overflow-y-auto px-2 sm:px-0 py-6 flex flex-col gap-8 items-center">
-          <div className="flex flex-col gap-8 max-w-2xl w-full">
+        <ChatHeader onMenuClick={() => setIsSidebarOpen(true)} />
+        <main className="flex-1 overflow-y-auto px-2 sm:px-0 py-6 flex flex-col gap-4 items-center">
+          <div className="flex flex-col gap-4 max-w-2xl w-full">
             {messages.length === 0 && !isLoading && (
-              <div className="text-[#a0a0a0] text-center mt-16 text-4xl font-semibold mb-8">ChatGPT</div>
+              <div className="text-gray-300 text-center mt-16 text-3xl font-semibold mb-8">What can I help with?</div>
             )}
             {messages.map((msg) => (
               <ChatMessage key={msg.id} message={msg} onEditSubmit={handleEditSubmit} />
