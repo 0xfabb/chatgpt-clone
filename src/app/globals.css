@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+:root {
+  --background: #000000;
+  --foreground: #ececf1;
+  --sidebar-bg: #202123;
+  --sidebar-border: #2a2b32;
+  --chat-bg: #000000;
+  --chat-header-bg: #473939;
+  --chat-input-bg: #23232b;
+  --chat-user-bubble: #2a2b32;
+  --chat-assistant-bubble: #f7f7f8;
+  --accent: #19c37d;
+  --plus: #6D28D9;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', 'Geist', 'Segoe UI', Arial, sans-serif;
+  font-size: 16px;
+  font-smooth: always;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background: #202123;
+}
+::-webkit-scrollbar-thumb {
+  background: #343541;
+  border-radius: 4px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+textarea {
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+textarea::-webkit-scrollbar {
+  width: 8px;
+}
+
+textarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+
+.shadow-lg {
+  box-shadow: 0 4px 32px 0 rgba(0,0,0,0.12), 0 1.5px 4px 0 rgba(0,0,0,0.08);
+}
+
+input, textarea, button {
+  outline: none;
+}
+
+button:active {
+  transform: scale(0.98);
+}
