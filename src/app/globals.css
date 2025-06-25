@@ -7,8 +7,8 @@
   --sidebar-border: #2a2b32;
   --chat-bg: #000000;
   --chat-header-bg: #473939;
-  --chat-input-bg: #23232b;
-  --chat-user-bubble: #2a2b32;
+  --chat-input-bg: #ffffff;
+  --chat-user-bubble: #ffffff;
   --chat-assistant-bubble: #f7f7f8;
   --accent: #19c37d;
   --plus: #6D28D9;
@@ -36,6 +36,8 @@ body {
   font-smooth: always;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 ::-webkit-scrollbar {
@@ -55,6 +57,8 @@ textarea {
   font-family: inherit;
   font-size: 1rem;
   line-height: 1.5;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 textarea::-webkit-scrollbar {
@@ -84,4 +88,52 @@ input, textarea, button {
 
 button:active {
   transform: scale(0.98);
+}
+
+/* Mobile text overflow fixes */
+.prose {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.prose p {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.prose pre {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.prose code {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+/* Ensure chat messages don't overflow on mobile */
+@media (max-width: 640px) {
+  .prose {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  
+  .prose p {
+    margin-bottom: 0.75rem;
+  }
+  
+  .prose pre {
+    font-size: 0.85rem;
+    padding: 0.75rem;
+  }
+  
+  .prose code {
+    font-size: 0.85rem;
+  }
 }
